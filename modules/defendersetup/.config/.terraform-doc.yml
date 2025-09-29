@@ -1,0 +1,47 @@
+formatter: "markdown table"
+
+header-from: ./.config/header.md
+
+sections:
+  show: 
+    - all
+
+content: |-
+
+  {{ .Header }}
+
+  ## Sample
+
+  This terraform configuration leverages mainly the module defendersetup, used to bootstrap defender fo cloud configuration in an azure environment at the subscription level.
+
+   ```hcl
+
+  {{ include "./.config/hclsamples/iacsample.hcl" }}
+
+   ```
+
+
+
+  {{ .Requirements }}
+
+  {{ .Providers }}
+
+  {{ .Inputs }}
+
+  {{ .Resources }}
+
+  {{ .Outputs }}
+
+  ## How to update this documentation
+
+  In the module folder, use the following command.
+
+  ```bash
+
+  terraform-docs --config ./.config/.terraform-doc.yml .
+
+  ```
+
+output: 
+  file: ./readme.md
+  mode: replace
