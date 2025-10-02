@@ -14,8 +14,18 @@ resource "azurerm_resource_group" "RGDefender" {
 }
 
 
+resource "random_string" "suffixsta" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+  numeric = true
+
+}
+
+/*
 resource "azurerm_storage_account" "STA" {
-  name                          = format("sta%s%s%s", var.perimeter.scope, var.perimeter.environment, var.perimeter.scope_index)
+  name                          = format("sta%s%s%s%s", var.perimeter.scope, var.perimeter.environment, random_string.suffixsta.result, var.perimeter.scope_index)
   resource_group_name           = azurerm_resource_group.RGDefender.name
   location                      = azurerm_resource_group.RGDefender.location
   account_tier                  = var.sta_config.account_tier
@@ -29,10 +39,11 @@ resource "azurerm_storage_account" "STA" {
 
 }
 
-
+/*
 resource "azurerm_security_center_storage_defender" "DefenderStorage" {
   storage_account_id = azurerm_storage_account.STA.id
 }
+*/
 
 resource "azurerm_security_center_contact" "DefenderContact" {
   name  = var.DefenderContact.Name

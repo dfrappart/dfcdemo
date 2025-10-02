@@ -59,8 +59,21 @@ resource "azurerm_monitor_diagnostic_setting" "KvDiagSettings" {
 
 }
 
+resource "random_string" "suffixstasample" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+  numeric = true
+  keepers = {
+    # Generate a new suffix only when the resource group name changes
+    rg_name = azurerm_resource_group.RGShared["rsg-kv"].name
+  }
+}
+
+
 resource "azurerm_storage_account" "STASample" {
-  name                          = "stalab${random_string.suffix.result}"
+  name                          = "stalab${random_string.suffixstasample.result}"
   resource_group_name           = azurerm_resource_group.RGShared["rsg-security"].name
   location                      = azurerm_resource_group.RGShared["rsg-security"].location
   account_tier                  = var.StaConfig.account_tier

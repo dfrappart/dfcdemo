@@ -5,6 +5,13 @@ resource "azurerm_security_center_subscription_pricing" "DefenderCWPPPricing" {
   tier          = each.value.plan
   resource_type = each.key
   subplan       = each.value.subplan
+  dynamic "extension" {
+    for_each = each.value.extension
+    content {
+      name = extension.value
+    }
+    
+  }
 }
 
 
@@ -14,6 +21,9 @@ variable "DefenderCwppPlan" {
     enabled = optional(bool, false)
     plan    = optional(string, "Standard")
     subplan = optional(string, null)
+    extension = optional(set(string), [])
+
+
 
   }))
   description = "The pricing for CWPP, can be Free or Standard"
@@ -22,7 +32,7 @@ variable "DefenderCwppPlan" {
       enabled = true
     },
     "Api" = {
-      enabled = true
+      enabled = false
       subplan = "P1"
     },
     "AppServices" = {
@@ -33,6 +43,7 @@ variable "DefenderCwppPlan" {
     },
     "KeyVaults" = {
       enabled = true
+      subplan = "PerKeyVault"
     },
     "KubernetesService" = {
       enabled = false
@@ -45,6 +56,7 @@ variable "DefenderCwppPlan" {
     },
     "StorageAccounts" = {
       enabled = true
+      subplan = "DefenderForStorageV2"
     },
     "VirtualMachines" = {
       enabled = true
@@ -52,6 +64,7 @@ variable "DefenderCwppPlan" {
     },
     "Arm" = {
       enabled = true
+      subplan = "PerSubscription"
     },
     "Dns" = {
       enabled = true

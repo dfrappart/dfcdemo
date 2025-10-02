@@ -30,6 +30,19 @@ resource "azurerm_log_analytics_workspace" "LawMonitor" {
   }
 }
 
+resource "random_string" "suffixsta" {
+  length  = 4
+  special = false
+  upper   = false
+  lower   = true
+  numeric = true
+  keepers = {
+    # Generate a new suffix only when the resource group name changes
+    rg_name = azurerm_resource_group.RGShared["rsg-kv"].name
+  }
+}
+
+
 resource "azurerm_storage_account" "StaMonitor" {
   access_tier                       = "Hot"
   account_kind                      = "StorageV2"
@@ -46,7 +59,7 @@ resource "azurerm_storage_account" "StaMonitor" {
   large_file_share_enabled          = null
   location                          = azurerm_resource_group.RGShared["rsg-monitor"].location
   min_tls_version                   = "TLS1_2"
-  name                              = "stamonfrcebyhte"
+  name                              = "stamonfrlab${random_string.suffixsta.result}"
   nfsv3_enabled                     = false
   public_network_access_enabled     = true
   queue_encryption_key_type         = "Service"
