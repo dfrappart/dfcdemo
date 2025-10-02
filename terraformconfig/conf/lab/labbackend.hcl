@@ -3,5 +3,5 @@
 
 
 container_name       = "terraform"
-key                  = "akslabnew.tfstate"
+key                  = "defenderdemo.tfstate"
 
