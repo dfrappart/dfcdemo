@@ -1,16 +1,16 @@
-name: 'Terraform Aks Lab on push'
+name: 'Terraform defender for cloud demo on push'
 
 on:
   push:
     branches:
     - main
     paths:
-    - 'terraformconfig/akslab/**'
+    - 'terraformconfig/**'
   pull_request:
 
 jobs:
   terraform:
-    name: 'aks lab build'
+    name: 'Defender for Cloud Demo'
     env:
       TF_VAR_AzureADClientID: ${{ secrets.AzureADClientID }}
       TF_VAR_AzureADClientSecret: ${{ secrets.AzureADClientSecret }}
@@ -19,7 +19,7 @@ jobs:
       TF_VAR_AzureClientID: ${{ secrets.AzureClientID }}
       TF_VERSION: 1.13.1
       access_key: ${{ secrets.STORAGEACCESSKEY }}
-      storage_account_name: ${{ vars.STORAGEBACKEND }}
+      storage_account_name: ${{ secrets.STORAGEBACKEND }}
     runs-on: ubuntu-latest
     environment: lab
 
@@ -27,7 +27,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./terraformconfig/akslab
+        working-directory: ./terraformconfig/
 
     steps:
     # Checkout the repository to the GitHub Actions runner

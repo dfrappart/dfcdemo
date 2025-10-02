@@ -117,3 +117,33 @@ variable "RgConfig" {
   }
 }
 
+variable "StaConfig" {
+  type = object({
+    location              = optional(string, "francecentral")
+    account_tier          = optional(string, "Standard")
+    access_tier           = optional(string, "Hot")
+    account_kind          = optional(string, "StorageV2")
+    account_replication   = optional(string, "LRS")
+    public_network_access = optional(bool, true)
+
+  })
+
+  default = {
+    location = "francecentral"
+  }
+
+}
+
+variable "DefenderPerimeter" {
+  type = object({
+    environment = string
+    scope       = string
+    scope_index = optional(string, "001")
+  })
+
+  default = {
+    environment = "lab"
+    scope       = "dfc"
+    scope_index = "001"
+  }
+}

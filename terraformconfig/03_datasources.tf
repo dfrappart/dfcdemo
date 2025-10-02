@@ -24,4 +24,10 @@ data "http" "myip" {
 }
 
 
+#############################################################################
+#data source for diagnostic settings
 
+data "azurerm_monitor_diagnostic_categories" "keyvaultdiag" {
+  resource_id = azurerm_key_vault.Kv.id
+  depends_on  = [azurerm_key_vault.Kv]
+}

@@ -34,7 +34,7 @@ content: |-
 
   ## How to update this documentation
 
-  In the module folder, use the following command.
+  In the terraformconfig folder, use the following command.
 
   ```bash
 
@@ -43,5 +43,5 @@ content: |-
   ```
 
 output: 
-  file: ./readme.md
+  file: ../readme.md
   mode: replace

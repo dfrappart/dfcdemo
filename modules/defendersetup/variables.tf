@@ -3,37 +3,29 @@
 
 variable "mandatory_tags" {
   type = object({
-    ApplicativeComponent            = string,
-    ApplicativeComponentId          = string,
-    ApplicativeComponentStakeholder = string,
-    Domain                          = string,
-    Environment                     = string,
-    RTO                             = string,
-    RPO                             = string,
-    InternetExposure                = string,
-    Lifecycle                       = string,
-    Trigramme                       = string
+    data_classification  = optional(string, null)
+    operation_commitment = optional(string, null)
+    usage                = optional(string, null)
+    start_time           = optional(string, null)
+    stop_time            = optional(string, null)
 
   })
-  description = "The mandatory tags must be in any project."
+
+  default = {}
 }
 
 variable "optional_tags" {
   type = object({
-    ApplicationName        = optional(string)
-    ApplicationStakeholder = optional(string)
-    Deallocate             = optional(string)
-    BackupStrat            = optional(string)
-    DataPrivacy            = optional(string)
-    PersonalData           = optional(string)
+    owner      = optional(string, "N/A")
+    start_date = optional(string, "N/A")
+
   })
-  description = "The optional tags can be in any project."
+  default = {}
 }
 
 variable "extra_tags" {
-  type        = map(string)
-  default     = {}
-  description = "The extra tags that the custmor can add at his project."
+  type    = map(string)
+  default = {}
 }
 
 variable "perimeter" {
@@ -51,14 +43,8 @@ variable "perimeter" {
 variable "DefenderLawId" {
   type        = string
   description = "The Id of the Defender log analytics workspace"
-  default     = "/subscriptions/52e80eb0-cfa5-4da5-86ae-dd4c5bd80474/resourceGroups/rg-defender-prd-001/providers/Microsoft.OperationalInsights/workspaces/law-defender-prd-001"
 }
 
-variable "DefenderStaId" {
-  type        = string
-  description = "The Id of the Defender log analytics workspace"
-  default     = "/subscriptions/52e80eb0-cfa5-4da5-86ae-dd4c5bd80474/resourceGroups/rg-defender-prd-001/providers/Microsoft.Storage/storageAccounts/stadefenderprd001"
-}
 
 
 variable "sta_config" {
