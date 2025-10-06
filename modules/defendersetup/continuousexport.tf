@@ -1,9 +1,9 @@
 
 resource "azurerm_security_center_automation" "continuous_export" {
   description         = null
-  enabled             = true
+  enabled             = var.DefenderContinousExportEnabled
   location            = var.location
-  name                = "ExportToWorkspace"
+  name                = var.DefenderContinuousExportName
   resource_group_name = azurerm_resource_group.RGDefender.name
   scopes              = [data.azurerm_subscription.current.id]
 

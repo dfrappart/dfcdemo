@@ -14,36 +14,6 @@ resource "azurerm_resource_group" "RGDefender" {
 }
 
 
-resource "random_string" "suffixsta" {
-  length  = 4
-  special = false
-  upper   = false
-  lower   = true
-  numeric = true
-
-}
-
-/*
-resource "azurerm_storage_account" "STA" {
-  name                          = format("sta%s%s%s%s", var.perimeter.scope, var.perimeter.environment, random_string.suffixsta.result, var.perimeter.scope_index)
-  resource_group_name           = azurerm_resource_group.RGDefender.name
-  location                      = azurerm_resource_group.RGDefender.location
-  account_tier                  = var.sta_config.account_tier
-  account_kind                  = var.sta_config.account_kind
-  account_replication_type      = var.sta_config.account_replication
-  access_tier                   = var.sta_config.access_tier
-  min_tls_version               = "TLS1_2"
-  public_network_access_enabled = var.sta_config.public_network_access
-
-  tags = merge(var.mandatory_tags, var.optional_tags, var.extra_tags)
-
-}
-
-/*
-resource "azurerm_security_center_storage_defender" "DefenderStorage" {
-  storage_account_id = azurerm_storage_account.STA.id
-}
-*/
 
 resource "azurerm_security_center_contact" "DefenderContact" {
   name  = var.DefenderContact.Name
@@ -59,5 +29,11 @@ resource "azurerm_security_center_subscription_pricing" "DefenderCSPMPricing" {
   tier          = var.DefenderCSPMPricing
   resource_type = "CloudPosture"
 
+  dynamic "extension" {
+    for_each = var.DefenderCSPMExtension
+    content {
+      name = extension.value
+    }
+    
+  }
 }
-

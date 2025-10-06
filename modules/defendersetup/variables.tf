@@ -103,19 +103,13 @@ variable "DefenderCSPMPricing" {
   type        = string
   description = "The pricing for CSPM, can be Fee or Standard"
   default     = "Standard"
+  
 }
 
-variable "DefenderContinuousExportsources" {
-  type = set(string)
-
-  default = [ 
-    #"Assessments",
-    "SubAssessments",
-    "Alerts",
-    "SecureScores",
-    "RegulatoryComplianceAssessment",
-
-  ]
+variable "DefenderCSPMExtension" {
+  type        = set(string)
+  description = "The extensions for CSPM"
+  default     = ["EntraPermissionsManagement"]
 }
 
 variable "DefenderContinousExportEnabled" {
@@ -189,5 +183,72 @@ variable "DefenderContinuousExportMap" {
       EventSource = "RegulatoryComplianceAssessment"
       RuleSets    = {}
     }
+  }
+}
+
+
+variable "DefenderCwppPlan" {
+  type        = map(object({
+    enabled = optional(bool, false)
+    plan    = optional(string, "Standard")
+    subplan = optional(string, null)
+    extension = optional(set(string), [])
+
+
+
+  }))
+  description = "The pricing for CWPP, can be Free or Standard"
+  default     = {
+    "AI" = {
+      enabled = true
+    },
+    "Api" = {
+      enabled = false
+      subplan = "P1"
+    },
+    "AppServices" = {
+      enabled = false
+    },
+    "ContainerRegistry" = {
+      enabled = false
+    },
+    "KeyVaults" = {
+      enabled = true
+      subplan = "PerKeyVault"
+    },
+    "KubernetesService" = {
+      enabled = false
+    },
+    "SQLServers" = {
+      enabled = false
+    },
+    "SqlServerVirtualMachines" = {
+      enabled = false
+    },
+    "StorageAccounts" = {
+      enabled = true
+      subplan = "DefenderForStorageV2"
+      extension = []
+    },
+    "VirtualMachines" = {
+      enabled = true
+      subplan = "P1"
+    },
+    "Arm" = {
+      enabled = true
+      subplan = "PerSubscription"
+    },
+    "Dns" = {
+      enabled = true
+    },
+    "OpenSourceRelationalDatabases" = {
+      enabled = false
+    },
+    "Containers" = {
+      enabled = true
+    },
+    "CosmosDB" = {
+      enabled = false
+    },
   }
 }
