@@ -34,6 +34,5 @@ resource "azurerm_security_center_subscription_pricing" "DefenderCSPMPricing" {
     content {
       name = extension.value
     }
-    
   }
 }
