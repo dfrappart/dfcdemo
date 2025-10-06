@@ -83,7 +83,7 @@ variable "DefenderContact" {
 
   default = {
     Name  = "CloudTeam"
-    Email = "david.frappart.externe@cnp.fr"
+    Email = "david@teknews.cloud"
   }
 }
 
@@ -103,4 +103,91 @@ variable "DefenderCSPMPricing" {
   type        = string
   description = "The pricing for CSPM, can be Fee or Standard"
   default     = "Standard"
+}
+
+variable "DefenderContinuousExportsources" {
+  type = set(string)
+
+  default = [ 
+    #"Assessments",
+    "SubAssessments",
+    "Alerts",
+    "SecureScores",
+    "RegulatoryComplianceAssessment",
+
+  ]
+}
+
+variable "DefenderContinousExportEnabled" {
+  type        = bool
+  default     = true
+  description = "A bool to enable or disable the continuous export"
+}
+
+variable "DefenderContinuousExportName" {
+  type        = string
+  default     = "ExportToWorkspace"
+  description = "The name of the continuous export"
+}
+
+variable "DefenderContinuousExportMap" {
+  type = map(object({
+    EventSource = string
+    RuleSets = optional(map(object({
+      PropertyPath  = string
+      Operator      = string
+      ExpectedValue = string
+      PropertyType  = string
+    })), {})
+  }))
+
+  default = {
+    "Alerts" = {
+      EventSource = "Alerts"
+      RuleSets = {
+        "High" = {
+          PropertyPath  = "Severity"
+          Operator      = "Equals"
+          ExpectedValue = "high"
+          PropertyType  = "String"
+        }
+        "Medium" = {
+          PropertyPath  = "Severity"
+          Operator      = "Equals"
+          ExpectedValue = "medium"
+          PropertyType  = "String"
+        }
+        "Low" = {
+          PropertyPath  = "Severity"
+          Operator      = "Equals"
+          ExpectedValue = "low"
+          PropertyType  = "String"
+        }
+      }
+    },
+    "SubAssessments" = {
+      EventSource = "SubAssessments"
+      RuleSets    = {}
+    },
+    "Assessments" = {
+      EventSource = "Assessments"
+      RuleSets = {
+        "Type" = {
+          PropertyPath  = "type"
+          Operator      = "Contains"
+          ExpectedValue = "Microsoft.Security/assessments"
+          PropertyType  = "String"
+        }
+      
+      }
+    },
+    "SecureScores" = {
+      EventSource = "SecureScores"
+      RuleSets    = {}
+    },
+    "RegulatoryComplianceAssessment" = {
+      EventSource = "RegulatoryComplianceAssessment"
+      RuleSets    = {}
+    }
+  }
 }

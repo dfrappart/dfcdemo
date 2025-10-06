@@ -1,66 +1,42 @@
 
-
-
-
 resource "azurerm_security_center_automation" "continuous_export" {
-  name                = "ExportToWorkspace"
+  description         = null
+  enabled             = true
   location            = var.location
+  name                = "ExportToWorkspace"
   resource_group_name = azurerm_resource_group.RGDefender.name
-  enabled = true
+  scopes              = [data.azurerm_subscription.current.id]
 
+  tags                = {}
+  
   action {
-    type        = "loganalytics"
-    resource_id = var.DefenderLawId
+    resource_id       = var.DefenderLawId
+    type              = "Workspace"
   }
 
-  source {
-    event_source = "Alerts"
-    rule_set {
-      rule {
-        property_path  = "Severity"
-        operator       = "Equals"
-        expected_value = "high"
-        property_type  = "String"
-      }
-    }
-    rule_set {
-      rule {
-        property_path  = "Severity"
-        operator       = "Equals"
-        expected_value = "medium"
-        property_type  = "String"
-      }
-    }
-    rule_set {
-      rule {
-        property_path  = "Severity"
-        operator       = "Equals"
-        expected_value = "low"
-        property_type  = "String"
-      }
-    }
-  }
 
   dynamic "source" {
-    for_each = var.DefenderContinuousExportsources
+    for_each = var.DefenderContinuousExportMap
 
     content {
-      event_source = source.value
+      event_source = source.value.EventSource
+
+      dynamic "rule_set" {
+        for_each = source.value.RuleSets
+        content {
+          rule {
+            expected_value = rule_set.value.ExpectedValue
+            operator       = rule_set.value.Operator
+            property_path  = rule_set.value.PropertyPath
+            property_type  = rule_set.value.PropertyType
+          }
+        }
+      }
     }
+    
   }
 
-  scopes = [data.azurerm_subscription.current.id]
-}
+  
 
-variable "DefenderContinuousExportsources" {
-  type = set(string)
 
-  default = [ 
-    #"Alerts",
-    "SecureScores",
-    #"SecureScoreControls",
-    #"RegulatoryComplianceAssessment",
-    #"SubAssessments",
-    #"Assessments"
-  ]
 }
