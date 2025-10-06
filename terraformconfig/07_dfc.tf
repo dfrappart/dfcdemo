@@ -10,7 +10,7 @@ module "defendersetup" {
     perimeter = var.DefenderPerimeter
     DefenderLawId = azurerm_log_analytics_workspace.LawMonitor.id
 
-    DefenderCSPMExtension = ["EntraPermissionsManagement", "AgentlessVmScanning"]
+    DefenderCSPMExtension = ["EntraPermissionsManagement", "AgentlessVmScanning","AgentlessDiscoveryForKubernetes","ContainerRegistriesVulnerabilityAssessments"]
 
 }
 
