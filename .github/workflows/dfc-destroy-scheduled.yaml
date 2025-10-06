@@ -1,8 +1,8 @@
-name: 'Defender for Cloud Demo - scheduled'
+name: 'Defender for Cloud Demo destroy - scheduled'
 
 on:
   schedule:
-    - cron: '0 20 * * *'
+    - cron: '0 0 1 * *'  # At 00:00 on day-of-month 1 (monthly)
 
 jobs:
   terraform:
