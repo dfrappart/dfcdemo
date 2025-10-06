@@ -22,7 +22,7 @@ jobs:
       TF_VAR_AzureTenantID: ${{ secrets.AZURETENANTID }}
       TF_VAR_AzureClientSecret: ${{ secrets.AZURECLIENTSECRET }}
       TF_VAR_AzureClientID: ${{ secrets.AZURECLIENTID }}
-      TF_VAR_AZURESUBSCRIPTIONID: ${{ vars.AZURESUBSCRIPTIONID }}
+      TF_VAR_AzureSubscriptionID: ${{ vars.AZURESUBSCRIPTIONID }}
       TF_VERSION: ${{ vars.TFVER }}
       access_key: ${{ secrets.STORAGEACCESSKEY }}
       storage_account_name: ${{ secrets.STORAGEBACKEND }}
