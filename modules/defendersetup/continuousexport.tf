@@ -57,7 +57,7 @@ variable "DefenderContinuousExportsources" {
 
   default = [ 
     #"Alerts",
-    #"SecureScores",
+    "SecureScores",
     #"SecureScoreControls",
     #"RegulatoryComplianceAssessment",
     #"SubAssessments",
