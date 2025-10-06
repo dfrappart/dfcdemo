@@ -204,6 +204,7 @@ variable "DefenderCwppPlan" {
   default     = {
     "AI" = {
       enabled = true
+      extension = ["AIPromptEvidence"]
     },
     "Api" = {
       enabled = false
@@ -231,11 +232,12 @@ variable "DefenderCwppPlan" {
     "StorageAccounts" = {
       enabled = true
       subplan = "DefenderForStorageV2"
-      extension = []
+      extension = ["OnUploadMalwareScanning","SensitiveDataDiscovery"]
     },
     "VirtualMachines" = {
       enabled = true
       subplan = "P1"
+      extension = ["MdeDesignatedSubscription",/*"AgentlessVmScanning"/*,"FileIntegrityMonitoring"*/]
     },
     "Arm" = {
       enabled = true
@@ -249,6 +251,7 @@ variable "DefenderCwppPlan" {
     },
     "Containers" = {
       enabled = true
+      extension = ["ContainerRegistriesVulnerabilityAssessments","AgentlessDiscoveryForKubernetes","AgentlessVmScanning","ContainerSensor"]
     },
     "CosmosDB" = {
       enabled = false
