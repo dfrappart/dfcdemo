@@ -109,7 +109,10 @@ variable "DefenderCSPMPricing" {
 variable "DefenderCSPMExtension" {
   type        = set(string)
   description = "The extensions for CSPM"
-  default     = ["EntraPermissionsManagement"]
+  default     = [
+    "EntraPermissionsManagement",
+    "AgentlessVmScanning"
+    ]
 }
 
 variable "DefenderContinousExportEnabled" {
