@@ -2,7 +2,7 @@ name: 'Defender for Cloud Demo - scheduled'
 
 on:
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 20 * * *'
 
 jobs:
   terraform:
