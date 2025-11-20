@@ -1,0 +1,15 @@
+securityresources 
+| where type == "microsoft.security/locations/alerts"
+| project 
+        SubscriptionId = subscriptionId,
+        AzureResourceId = properties.ResourceIdentifiers[0].AzureResourceId,
+        Type = properties.ResourceIdentifiers[0].Type,
+        AlertDisplayName = properties.AlertDisplayName,
+        Severity = properties.Severity,
+        AlertType = properties.AlertType,
+        ProductComponentName = properties.ProductComponentName,
+        Status = properties.Status,
+        Intent = properties.Intent,
+        AlertUri = properties.AlertUri,
+        Ip = properties.Entities[2].FriendlyName,
+        Location = properties.Entities[2].SourceAddress.Location

@@ -1,0 +1,23 @@
+securityresources 
+| where type =~ "microsoft.security/assessments"
+| project 
+       DisplayName = properties.displayName,
+       ResourceType = properties.resourceDetails.ResourceType,
+       ResourceName = properties.resourceDetails.ResourceName,
+       ResourceId = properties.resourceDetails.ResourceId,
+       StatusCode = properties.status.code,
+       SecurityCategories = properties.metadata.securityCategories,
+       Description = properties.metadata.description,
+       Severity = properties.metadata.severity,
+       SecurityIssue = properties.metadata.securityIssue,
+       Categories = properties.metadata.categories,
+       Techniques = properties.metadata.techniques,
+       Tactics = properties.metadata.tactics,
+       Threats = properties.metadata.threats,
+       PolicyId = properties.metadata.policyDefinitionId,
+       properties
+//| summarize count() by tostring(StatusCode)
+//| summarize count() by tostring(Severity)
+//| summarize count() by tostring(Threats)
+//| summarize count() by tostring(Tactics)
+| summarize count() by tostring(ResourceType)
