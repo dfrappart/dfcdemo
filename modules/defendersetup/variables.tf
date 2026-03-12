@@ -196,6 +196,10 @@ variable "DefenderCwppPlan" {
     plan    = optional(string, "Standard")
     subplan = optional(string, null)
     extension = optional(set(string), [])
+    extension_settings = optional(map(object({
+      extension_name = string
+      additional_extension_settings = object
+    })), {})
 
 
 
